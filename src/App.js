@@ -25,11 +25,24 @@ class App extends Component {
       });
   }
 
+  handleTaggle = () => {
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        open: !this.state.open
+      };
+    });
+  };
+
   render() {
     return (
       <div className="container">
-        <Header messages={this.state.messages} />
-        <NewMsg />
+        <Header
+          messages={this.state.messages}
+          open={this.state.open}
+          toggleAddNewMessageContainer={this.handleTaggle}
+        />
+        {this.state.open && <NewMsg />}
         <Messages messages={this.state.messages} />
       </div>
     );

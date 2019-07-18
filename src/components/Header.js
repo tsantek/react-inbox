@@ -1,6 +1,6 @@
 import React from "react";
 
-const Header = () => {
+const Header = props => {
   return (
     <div className="row toolbar">
       <div className="col-md-12">
@@ -10,7 +10,17 @@ const Header = () => {
         </p>
 
         <button className="btn btn-danger">
-          <i className="fa fa-plus" />
+          {!props.open ? (
+            <i
+              className="fa fa-plus"
+              onClick={props.toggleAddNewMessageContainer}
+            />
+          ) : (
+            <i
+              className="fa fa-minus"
+              onClick={props.toggleAddNewMessageContainer}
+            />
+          )}
         </button>
 
         <button className="btn btn-default">
