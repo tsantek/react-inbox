@@ -3,13 +3,13 @@ import React from "react";
 const AddNewMessage = () => {
   return (
     <div className="container">
-      <form classNameName="form-horizontal well">
-        <div classNameName="form-group">
-          <div classNameName="col-sm-8 col-sm-offset-4">
+      <form className="form-horizontal well">
+        <div className="form-group">
+          <div className="col-sm-8 col-sm-offset-4">
             <h4>Compose Message</h4>
           </div>
         </div>
-        <div classNameName="form-group">
+        <div className="form-group">
           <label className="col-sm-2 control-label">Subject</label>
           <div className="col-sm-10">
             <input
