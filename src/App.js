@@ -1,12 +1,26 @@
 import React from "react";
 import "./App.css";
+import MessageContextProvider from "./context/MessageContext";
+import Header from "./components/Header";
+import Messages from "./components/Messages";
+import messageReducer from "./reducers/messagesReducer";
 
-function App() {
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/css/bootstrap-theme.css";
+import "font-awesome/css/font-awesome.css";
+import "./App.css";
+
+const App = () => {
   return (
     <div className="App">
-      <h1>Clean</h1>
+      <MessageContextProvider>
+        <div className="container">
+          <Header />
+          <Messages />
+        </div>
+      </MessageContextProvider>
     </div>
   );
-}
+};
 
 export default App;
