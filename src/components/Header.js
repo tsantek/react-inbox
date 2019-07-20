@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
+import { MessageContext } from "../context/MessageContext";
 
 const Header = () => {
+  const context = useContext(MessageContext);
+
+  let totalUnread = 0;
+
+  context.messages.map(message => {
+    if (!message.read) {
+      totalUnread += 1;
+    }
+  });
+
   return (
     <div>
       <div className="row toolbar">
         <div className="col-md-12">
           <p className="pull-right">
-            <span className="badge badge">2</span>
+            <span className="badge badge">{totalUnread}</span>
             unread messages
           </p>
           <a className="btn btn-danger">

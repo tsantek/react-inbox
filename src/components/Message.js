@@ -4,14 +4,9 @@ const Message = props => {
   const { message } = props;
   let msg;
 
-  if (!message.read && !message.starred) {
+  if (!message.read) {
     msg = "row message unread";
-  }
-
-  if (message.read && !message.starred) {
-    msg = "row message read";
-  }
-  if (message.starred) {
+  } else {
     msg = "row message read";
   }
 
@@ -24,9 +19,9 @@ const Message = props => {
           </div>
           <div className="col-xs-2">
             {message.starred ? (
-              <i className="star fa fa-star-o" />
-            ) : (
               <i className="star fa fa-star" />
+            ) : (
+              <i className="star fa fa-star-o" />
             )}
           </div>
         </div>
@@ -34,11 +29,13 @@ const Message = props => {
       <div className="col-xs-11">
         {message.labels.length > 0 &&
           message.labels.map(lable => {
-            return <span class="label label-warning">{lable}</span>;
+            return (
+              <span key={lable} className="label label-warning">
+                {lable}
+              </span>
+            );
           })}
-        <a style={{ cursor: "pointer" }} href="#">
-          {message.subject}
-        </a>
+        <a style={{ cursor: "pointer" }}>{message.subject}</a>
       </div>
     </div>
   );

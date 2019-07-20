@@ -3,7 +3,6 @@ import "./App.css";
 import MessageContextProvider from "./context/MessageContext";
 import Header from "./components/Header";
 import Messages from "./components/Messages";
-import messageReducer from "./reducers/messagesReducer";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/css/bootstrap-theme.css";

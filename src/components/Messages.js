@@ -7,7 +7,7 @@ const Messages = () => {
   return (
     <>
       {context.messages.map(message => {
-        return <Message message={message} />;
+        return <Message key={message.id} message={message} />;
       })}
     </>
   );
