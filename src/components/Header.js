@@ -1,8 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { MessageContext } from "../context/MessageContext";
+import AddNewMessage from "./AddNewMessage";
 
 const Header = () => {
   const context = useContext(MessageContext);
+  const [toggle, setToggle] = useState(false);
 
   let totalUnread = 0;
 
@@ -13,15 +15,19 @@ const Header = () => {
   });
 
   return (
-    <div>
+    <div className="container">
       <div className="row toolbar">
         <div className="col-md-12">
           <p className="pull-right">
             <span className="badge badge">{totalUnread}</span>
             unread messages
           </p>
-          <a className="btn btn-danger">
-            <i className="fa fa-plus" />
+          <a className="btn btn-danger" onClick={() => setToggle(!toggle)}>
+            {!toggle ? (
+              <i className="fa fa-plus" />
+            ) : (
+              <i className="fa fa-minus" />
+            )}
           </a>
 
           <button className="btn btn-default">
@@ -51,6 +57,7 @@ const Header = () => {
           </button>
         </div>
       </div>
+      {toggle && <AddNewMessage />}
     </div>
   );
 };

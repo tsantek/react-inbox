@@ -13,10 +13,8 @@ const App = () => {
   return (
     <div className="App">
       <MessageContextProvider>
-        <div className="container">
-          <Header />
-          <Messages />
-        </div>
+        <Header />
+        <Messages />
       </MessageContextProvider>
     </div>
   );
