@@ -65,6 +65,23 @@ export const messageReducer = (state, action) => {
         }
       });
 
+    case "MARK_AS_READ_ONE":
+      return state.map(message => {
+        if (message.id === action.payload) {
+          return {
+            ...message,
+            read: true,
+            open: true
+          };
+        } else {
+          return {
+            ...message,
+            read: message.read,
+            open: false
+          };
+        }
+      });
+
     case "MARK_AS_UNREAD":
       return state.map(message => {
         if (message.selected) {

@@ -37,6 +37,18 @@ const Message = props => {
       .catch(e => console.log(e));
   };
 
+  const handleOpen = id => {
+    MessegesAPI.patch("/messages", {
+      messageIds: [id],
+      command: "read",
+      read: true
+    }).catch(e => console.log(e));
+    context.dispatch({
+      type: "MARK_AS_READ_ONE",
+      payload: id
+    });
+  };
+
   return (
     <div className="container">
       <div className={msg}>
@@ -70,7 +82,7 @@ const Message = props => {
                 </span>
               );
             })}
-          <a>{message.subject}</a>
+          <a onClick={() => handleOpen(message.id)}>{message.subject}</a>
         </div>
       </div>
     </div>

@@ -12,7 +12,12 @@ const MessageContextProvider = props => {
       .then(res =>
         dispatch({
           type: "GET_MESSEGES",
-          payload: res.data
+          payload: res.data.map(message => {
+            return {
+              ...message,
+              open: false
+            };
+          })
         })
       )
       .catch(err => console.log(err));
