@@ -9,7 +9,7 @@ const Header = () => {
   let totalUnread = 0;
 
   context.messages.map(message => {
-    if (message.read.length > 0) {
+    if (message.read === false) {
       totalUnread += 1;
     }
   });

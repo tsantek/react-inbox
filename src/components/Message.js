@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { MessageContext } from "../context/MessageContext";
+import MessegesAPI from "../api/MessegesAPI";
 
 const Message = props => {
   const context = useContext(MessageContext);
@@ -22,6 +23,20 @@ const Message = props => {
     });
   };
 
+  const handleChangeStar = id => {
+    MessegesAPI.patch("/messages", {
+      messageIds: [id],
+      command: "star"
+    })
+      .then(res => {
+        context.dispatch({
+          type: "STAR",
+          payload: id
+        });
+      })
+      .catch(e => console.log(e));
+  };
+
   return (
     <div className="container">
       <div className={msg}>
@@ -34,7 +49,10 @@ const Message = props => {
                 onChange={e => handleChangeChecked(e, message.id)}
               />
             </div>
-            <div className="col-xs-2">
+            <div
+              className="col-xs-2"
+              onClick={() => handleChangeStar(message.id)}
+            >
               {message.starred ? (
                 <i className="star fa fa-star" />
               ) : (

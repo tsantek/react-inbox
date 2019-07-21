@@ -38,6 +38,18 @@ export const messageReducer = (state, action) => {
         }
       });
 
+    case "STAR":
+      return state.map(message => {
+        if (message.id === action.payload) {
+          return {
+            ...message,
+            starred: !message.starred
+          };
+        } else {
+          return message;
+        }
+      });
+
     case "MARK_AS_READ":
       return state.map(message => {
         if (message.selected) {
@@ -70,6 +82,11 @@ export const messageReducer = (state, action) => {
 
     case "DELETE_MESSAGE":
       return state.filter(message => !message.selected);
+
+    case "ADD_NEW_MESSAGE":
+      console.log(action.payload);
+      return [...state, action.payload];
+
     default:
       return state;
   }
