@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import { MessageContext } from "../context/MessageContext";
 import AddNewMessage from "./AddNewMessage";
 import MessegesAPI from "../api/MessegesAPI";
-import { async } from "q";
 
 const Header = () => {
   const context = useContext(MessageContext);
@@ -54,7 +53,7 @@ const Header = () => {
     });
   };
 
-  const handleDeleteMessage = async () => {
+  const handleDeleteMessage = () => {
     MessegesAPI.patch("/messages", {
       messageIds: selectedMessagesIds,
       command: "delete"

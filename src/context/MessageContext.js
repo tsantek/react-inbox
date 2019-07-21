@@ -1,6 +1,6 @@
 import React, { createContext, useReducer, useEffect } from "react";
 import { messageReducer } from "../reducers/messagesReducer";
-import axios from "axios";
+import MessegesAPI from "../api/MessegesAPI";
 export const MessageContext = createContext();
 
 const MessageContextProvider = props => {
@@ -8,8 +8,7 @@ const MessageContextProvider = props => {
 
   useEffect(() => {
     dispatch({ type: "FETCHING_MESSAGES" });
-    axios
-      .get("https://galvanizeapibooks.herokuapp.com/api/messages")
+    MessegesAPI.get("/messages")
       .then(res =>
         dispatch({
           type: "GET_MESSEGES",
