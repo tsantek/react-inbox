@@ -1,14 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
+import { MessageContext } from "../context/MessageContext";
 
 const Message = props => {
+  const context = useContext(MessageContext);
   const { message } = props;
   let msg;
-
-  if (!message.read) {
+  if (!message.read && !message.selected) {
     msg = "row message unread";
+  } else if (message.read === false && message.selected) {
+    msg = "row message unread selected";
+  } else if (message.read && message.selected) {
+    msg = "row message read selected";
   } else {
     msg = "row message read";
   }
+
+  const handleChangeChecked = (e, id) => {
+    context.dispatch({
+      type: "CHECKED",
+      payload: id
+    });
+  };
 
   return (
     <div className="container">
@@ -16,7 +28,11 @@ const Message = props => {
         <div className="col-xs-1">
           <div className="row">
             <div className="col-xs-2">
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                checked={message.selected}
+                onChange={e => handleChangeChecked(e, message.id)}
+              />
             </div>
             <div className="col-xs-2">
               {message.starred ? (
@@ -36,7 +52,7 @@ const Message = props => {
                 </span>
               );
             })}
-          <a style={{ cursor: "pointer" }}>{message.subject}</a>
+          <a>{message.subject}</a>
         </div>
       </div>
     </div>

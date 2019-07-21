@@ -5,7 +5,6 @@ import AddNewMessage from "./AddNewMessage";
 const Header = () => {
   const context = useContext(MessageContext);
   const [toggle, setToggle] = useState(false);
-
   let totalUnread = 0;
 
   context.messages.map(message => {
@@ -13,6 +12,20 @@ const Header = () => {
       totalUnread += 1;
     }
   });
+
+  let selectedMsg = context.messages.filter(message => message.selected);
+
+  const handleUnselectAll = () => {
+    context.dispatch({
+      type: "SELECT_ALL_FALSE"
+    });
+  };
+
+  const handleSelectAll = () => {
+    context.dispatch({
+      type: "SELECT_ALL_TRUE"
+    });
+  };
 
   return (
     <div className="container">
@@ -29,10 +42,15 @@ const Header = () => {
               <i className="fa fa-minus" />
             )}
           </a>
-
-          <button className="btn btn-default">
-            <i className="fa fa-minus-square-o" />
-          </button>
+          {selectedMsg.length > 0 ? (
+            <button className="btn btn-default" onClick={handleUnselectAll}>
+              <i className="fa fa-check-square-o" />
+            </button>
+          ) : (
+            <button className="btn btn-default" onClick={handleSelectAll}>
+              <i className="fa fa-minus-square-o" />
+            </button>
+          )}
 
           <button className="btn btn-default">Mark As Read</button>
 
