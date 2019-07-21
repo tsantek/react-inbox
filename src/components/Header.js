@@ -1,6 +1,8 @@
 import React, { useContext, useState } from "react";
 import { MessageContext } from "../context/MessageContext";
 import AddNewMessage from "./AddNewMessage";
+import MessegesAPI from "../api/MessegesAPI";
+import { async } from "q";
 
 const Header = () => {
   const context = useContext(MessageContext);
@@ -8,12 +10,13 @@ const Header = () => {
   let totalUnread = 0;
 
   context.messages.map(message => {
-    if (!message.read) {
+    if (message.read.length > 0) {
       totalUnread += 1;
     }
   });
 
   let selectedMsg = context.messages.filter(message => message.selected);
+  let selectedMessagesIds = selectedMsg.map(message => message.id);
 
   const handleUnselectAll = () => {
     context.dispatch({
@@ -24,6 +27,42 @@ const Header = () => {
   const handleSelectAll = () => {
     context.dispatch({
       type: "SELECT_ALL_TRUE"
+    });
+  };
+
+  const handleMarkAsRead = () => {
+    MessegesAPI.patch("/messages", {
+      messageIds: selectedMessagesIds,
+      command: "read",
+      read: true
+    }).catch(e => console.log(e));
+    context.dispatch({
+      type: "MARK_AS_READ",
+      payload: selectedMsg
+    });
+  };
+
+  const handleMarkAsUnread = () => {
+    MessegesAPI.patch("/messages", {
+      messageIds: selectedMessagesIds,
+      command: "read",
+      read: false
+    }).catch(e => console.log(e));
+    context.dispatch({
+      type: "MARK_AS_UNREAD",
+      payload: selectedMsg
+    });
+  };
+
+  const handleDeleteMessage = async () => {
+    MessegesAPI.patch("/messages", {
+      messageIds: selectedMessagesIds,
+      command: "delete"
+    })
+      .then(res => console.log(res))
+      .catch(e => console.log(e));
+    context.dispatch({
+      type: "DELETE_MESSAGE"
     });
   };
 
@@ -52,9 +91,13 @@ const Header = () => {
             </button>
           )}
 
-          <button className="btn btn-default">Mark As Read</button>
+          <button className="btn btn-default" onClick={handleMarkAsRead}>
+            Mark As Read
+          </button>
 
-          <button className="btn btn-default">Mark As Unread</button>
+          <button className="btn btn-default" onClick={handleMarkAsUnread}>
+            Mark As Unread
+          </button>
 
           <select className="form-control label-select">
             <option>Apply label</option>
@@ -70,7 +113,7 @@ const Header = () => {
             <option value="gschool">gschool</option>
           </select>
 
-          <button className="btn btn-default">
+          <button className="btn btn-default" onClick={handleDeleteMessage}>
             <i className="fa fa-trash-o" />
           </button>
         </div>

@@ -37,6 +37,39 @@ export const messageReducer = (state, action) => {
           return message;
         }
       });
+
+    case "MARK_AS_READ":
+      return state.map(message => {
+        if (message.selected) {
+          return {
+            ...message,
+            read: true
+          };
+        } else {
+          return {
+            ...message,
+            read: message.read
+          };
+        }
+      });
+
+    case "MARK_AS_UNREAD":
+      return state.map(message => {
+        if (message.selected) {
+          return {
+            ...message,
+            read: false
+          };
+        } else {
+          return {
+            ...message,
+            read: message.read
+          };
+        }
+      });
+
+    case "DELETE_MESSAGE":
+      return state.filter(message => !message.selected);
     default:
       return state;
   }
