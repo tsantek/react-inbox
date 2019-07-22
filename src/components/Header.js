@@ -71,7 +71,7 @@ const Header = () => {
         <div className="col-md-12">
           <p className="pull-right">
             <span className="badge badge">{totalUnread}</span>
-            unread messages
+            unread {totalUnread === 1 ? "message" : "messages"}
           </p>
           <a className="btn btn-danger" onClick={() => setToggle(!toggle)}>
             {!toggle ? (
@@ -80,7 +80,11 @@ const Header = () => {
               <i className="fa fa-minus" />
             )}
           </a>
-          {selectedMsg.length > 0 ? (
+          {selectedMsg.length === 0 ? (
+            <button class="btn btn-default" onClick={handleSelectAll}>
+              <i class="fa fa-square-o" />
+            </button>
+          ) : selectedMsg.length === context.messages.length ? (
             <button className="btn btn-default" onClick={handleUnselectAll}>
               <i className="fa fa-check-square-o" />
             </button>
