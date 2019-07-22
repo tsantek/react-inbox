@@ -5,7 +5,7 @@ import MessegesAPI from "../api/MessegesAPI";
 
 const Header = () => {
   const context = useContext(MessageContext);
-  const [toggle, setToggle] = useState(false);
+  console.log(context);
   const [applyLabel, setLabel] = useState("");
   const [removeLabel, setRemoveLable] = useState("");
   let totalUnread = 0;
@@ -110,8 +110,13 @@ const Header = () => {
             <span className="badge badge">{totalUnread}</span>
             unread {totalUnread === 1 ? "message" : "messages"}
           </p>
-          <button className="btn btn-danger" onClick={() => setToggle(!toggle)}>
-            {!toggle ? (
+          <button
+            className="btn btn-danger"
+            onClick={() =>
+              context.setToggleAddNewMessage(!context.toggleAddNewMessage)
+            }
+          >
+            {!context.toggleAddNewMessage ? (
               <i className="fa fa-plus" />
             ) : (
               <i className="fa fa-minus" />
@@ -166,7 +171,7 @@ const Header = () => {
           </button>
         </div>
       </div>
-      {toggle && <AddNewMessage />}
+      {context.toggleAddNewMessage && <AddNewMessage />}
     </div>
   );
 };

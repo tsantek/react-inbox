@@ -20,6 +20,7 @@ const AddNewMessage = () => {
       .catch(e => console.log(e));
     setSubject("");
     setBody("");
+    context.setToggleAddNewMessage(!context.toggleAddNewMessage);
   };
 
   return (
