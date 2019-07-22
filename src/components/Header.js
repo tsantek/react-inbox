@@ -144,6 +144,32 @@ const Header = () => {
               <button className="btn btn-default" onClick={handleMarkAsUnread}>
                 Mark As Unread
               </button>
+
+              <select
+                className="form-control label-select"
+                onChange={handleApplyLabel}
+                value={applyLabel}
+              >
+                <option value="apply-label">Apply label</option>
+                <option value="dev">dev</option>
+                <option value="personal">personal</option>
+                <option value="gschool">gschool</option>
+              </select>
+
+              <select
+                className="form-control label-select"
+                onChange={handleRemoveLabel}
+                value={removeLabel}
+              >
+                <option>Remove label</option>
+                <option value="dev">dev</option>
+                <option value="personal">personal</option>
+                <option value="gschool">gschool</option>
+              </select>
+
+              <button className="btn btn-default" onClick={handleDeleteMessage}>
+                <i className="fa fa-trash-o" />
+              </button>
             </>
           ) : (
             <>
@@ -153,34 +179,36 @@ const Header = () => {
               <button className="btn btn-default" disabled>
                 Mark As Unread
               </button>
+
+              <select
+                disabled
+                className="form-control label-select"
+                onChange={handleApplyLabel}
+                value={applyLabel}
+              >
+                <option value="apply-label">Apply label</option>
+                <option value="dev">dev</option>
+                <option value="personal">personal</option>
+                <option value="gschool">gschool</option>
+              </select>
+
+              <select
+                disabled
+                className="form-control label-select"
+                onChange={handleRemoveLabel}
+                value={removeLabel}
+              >
+                <option>Remove label</option>
+                <option value="dev">dev</option>
+                <option value="personal">personal</option>
+                <option value="gschool">gschool</option>
+              </select>
+
+              <button className="btn btn-default" disabled>
+                <i className="fa fa-trash-o" />
+              </button>
             </>
           )}
-
-          <select
-            className="form-control label-select"
-            onChange={handleApplyLabel}
-            value={applyLabel}
-          >
-            <option value="apply-label">Apply label</option>
-            <option value="dev">dev</option>
-            <option value="personal">personal</option>
-            <option value="gschool">gschool</option>
-          </select>
-
-          <select
-            className="form-control label-select"
-            onChange={handleRemoveLabel}
-            value={removeLabel}
-          >
-            <option>Remove label</option>
-            <option value="dev">dev</option>
-            <option value="personal">personal</option>
-            <option value="gschool">gschool</option>
-          </select>
-
-          <button className="btn btn-default" onClick={handleDeleteMessage}>
-            <i className="fa fa-trash-o" />
-          </button>
         </div>
       </div>
       {context.toggleAddNewMessage && <AddNewMessage />}
