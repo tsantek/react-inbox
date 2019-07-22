@@ -6,12 +6,15 @@ import MessegesAPI from "../api/MessegesAPI";
 const Header = () => {
   const context = useContext(MessageContext);
   const [toggle, setToggle] = useState(false);
+  const [applyLabel, setLabel] = useState("");
+  const [removeLabel, setRemoveLable] = useState("");
   let totalUnread = 0;
 
   context.messages.map(message => {
     if (message.read === false) {
       totalUnread += 1;
     }
+    return totalUnread;
   });
 
   let selectedMsg = context.messages.filter(message => message.selected);
@@ -58,11 +61,45 @@ const Header = () => {
       messageIds: selectedMessagesIds,
       command: "delete"
     })
-      .then(res => console.log(res))
+      .then(res => {
+        context.dispatch({
+          type: "DELETE_MESSAGE"
+        });
+      })
       .catch(e => console.log(e));
-    context.dispatch({
-      type: "DELETE_MESSAGE"
-    });
+  };
+
+  const handleApplyLabel = e => {
+    MessegesAPI.patch("/messages", {
+      messageIds: selectedMessagesIds,
+      command: "addLabel",
+      label: e.target.value
+    })
+      .then(res => {
+        context.dispatch({
+          type: "APPLY_LABEL",
+          payload: res.data
+        });
+      })
+      .catch(e => console.log(e));
+
+    setLabel("");
+  };
+
+  const handleRemoveLabel = e => {
+    MessegesAPI.patch("/messages", {
+      messageIds: selectedMessagesIds,
+      command: "removeLabel",
+      label: e.target.value
+    })
+      .then(res => {
+        context.dispatch({
+          type: "REMOVE_LABEL",
+          payload: res.data
+        });
+      })
+      .catch(e => console.log(e));
+    setRemoveLable("");
   };
 
   return (
@@ -73,16 +110,16 @@ const Header = () => {
             <span className="badge badge">{totalUnread}</span>
             unread {totalUnread === 1 ? "message" : "messages"}
           </p>
-          <a className="btn btn-danger" onClick={() => setToggle(!toggle)}>
+          <button className="btn btn-danger" onClick={() => setToggle(!toggle)}>
             {!toggle ? (
               <i className="fa fa-plus" />
             ) : (
               <i className="fa fa-minus" />
             )}
-          </a>
+          </button>
           {selectedMsg.length === 0 ? (
-            <button class="btn btn-default" onClick={handleSelectAll}>
-              <i class="fa fa-square-o" />
+            <button className="btn btn-default" onClick={handleSelectAll}>
+              <i className="fa fa-square-o" />
             </button>
           ) : selectedMsg.length === context.messages.length ? (
             <button className="btn btn-default" onClick={handleUnselectAll}>
@@ -102,14 +139,22 @@ const Header = () => {
             Mark As Unread
           </button>
 
-          <select className="form-control label-select">
-            <option>Apply label</option>
+          <select
+            className="form-control label-select"
+            onChange={handleApplyLabel}
+            value={applyLabel}
+          >
+            <option value="apply-label">Apply label</option>
             <option value="dev">dev</option>
             <option value="personal">personal</option>
             <option value="gschool">gschool</option>
           </select>
 
-          <select className="form-control label-select">
+          <select
+            className="form-control label-select"
+            onChange={handleRemoveLabel}
+            value={removeLabel}
+          >
             <option>Remove label</option>
             <option value="dev">dev</option>
             <option value="personal">personal</option>

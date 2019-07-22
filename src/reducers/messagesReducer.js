@@ -101,8 +101,13 @@ export const messageReducer = (state, action) => {
       return state.filter(message => !message.selected);
 
     case "ADD_NEW_MESSAGE":
-      console.log(action.payload);
       return [...state, action.payload];
+
+    case "APPLY_LABEL":
+      return action.payload;
+
+    case "REMOVE_LABEL":
+      return action.payload;
 
     default:
       return state;

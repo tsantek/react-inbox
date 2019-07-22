@@ -5,7 +5,6 @@ const MessageBody = () => {
   const { messages } = useContext(MessageContext);
 
   let showMessage = messages.filter(message => message.open);
-  console.log(showMessage);
   return (
     <div className="container">
       {showMessage.length > 0 ? (

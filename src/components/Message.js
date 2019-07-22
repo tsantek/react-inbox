@@ -82,7 +82,9 @@ const Message = props => {
                 </span>
               );
             })}
-          <a onClick={() => handleOpen(message.id)}>{message.subject}</a>
+          <a href="#nowhere" style={{}} onClick={() => handleOpen(message.id)}>
+            {message.subject}
+          </a>
         </div>
       </div>
     </div>
