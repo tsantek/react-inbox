@@ -1,5 +1,7 @@
 Message Display build with React using React Context and React Hooks.
 
+STORY:
+
 Users should see a list of messages with the correct styles
 
 When a user views the app
