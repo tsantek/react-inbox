@@ -5,7 +5,6 @@ import MessegesAPI from "../api/MessegesAPI";
 
 const Header = () => {
   const context = useContext(MessageContext);
-  console.log(context);
   const [applyLabel, setLabel] = useState("");
   const [removeLabel, setRemoveLable] = useState("");
   let totalUnread = 0;
@@ -122,6 +121,7 @@ const Header = () => {
               <i className="fa fa-minus" />
             )}
           </button>
+
           {selectedMsg.length === 0 ? (
             <button className="btn btn-default" onClick={handleSelectAll}>
               <i className="fa fa-square-o" />
@@ -136,13 +136,25 @@ const Header = () => {
             </button>
           )}
 
-          <button className="btn btn-default" onClick={handleMarkAsRead}>
-            Mark As Read
-          </button>
-
-          <button className="btn btn-default" onClick={handleMarkAsUnread}>
-            Mark As Unread
-          </button>
+          {selectedMsg.length > 0 ? (
+            <>
+              <button className="btn btn-default" onClick={handleMarkAsRead}>
+                Mark As Read
+              </button>
+              <button className="btn btn-default" onClick={handleMarkAsUnread}>
+                Mark As Unread
+              </button>
+            </>
+          ) : (
+            <>
+              <button className="btn btn-default" disabled>
+                Mark As Read
+              </button>
+              <button className="btn btn-default" disabled>
+                Mark As Unread
+              </button>
+            </>
+          )}
 
           <select
             className="form-control label-select"
