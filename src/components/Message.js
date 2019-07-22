@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { MessageContext } from "../context/MessageContext";
 import MessegesAPI from "../api/MessegesAPI";
-
 const Message = props => {
   const context = useContext(MessageContext);
   const { message } = props;
@@ -87,6 +86,15 @@ const Message = props => {
           </a>
         </div>
       </div>
+      {/* BODY */}
+
+      {message.open && (
+        <div className="container">
+          <div className="row message-body">
+            <div className="col-xs-11 col-xs-offset-1">{message.body}</div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

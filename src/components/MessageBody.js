@@ -12,7 +12,7 @@ const MessageBody = () => {
           <div className="col-xs-11 col-xs-offset-1">{showMessage[0].body}</div>
         </div>
       ) : (
-        "Please select message to see content"
+        ""
       )}
     </div>
   );
